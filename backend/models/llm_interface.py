@@ -13,5 +13,4 @@ class LLMInterface():
         print("Generated output:", result)
         return result
     
-#llm_interface = LLMInterface()
-#print(llm_interface.GenerateOutput("How many days in the week are there?"))
+    

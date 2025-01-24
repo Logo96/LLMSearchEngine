@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.models.llm_interface import LLMInterface
+from backend.pipeline.rag_interface import RAG_Interface
 from contextlib import asynccontextmanager
 
 class LLMRequest(BaseModel):
@@ -11,7 +12,9 @@ class LLMResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     llm_interface = LLMInterface()
+    rag_interface = RAG_Interface()
     app.state.llm_interface = llm_interface
+    app.state.rag_interface = rag_interface
     yield
 
 app = FastAPI(lifespan=lifespan)
