@@ -30,8 +30,8 @@ async def inference(prompt: LLMRequest):
     llm_interface = app.state.llm_interface
     rag_interace = app.state.rag_interface
     augmented_query = rag_interace.augment_query(prompt.query)
-    response = llm_interface.generate_output(augmented_query)
-    return {"response": augmented_query}
+    llm_output = llm_interface.generate_output(augmented_query)
+    return {"response": llm_output}
 
 @app.get("/")
 async def root():

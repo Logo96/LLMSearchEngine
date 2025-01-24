@@ -1,7 +1,9 @@
 from backend.pipeline.retriever import Retriever
 from backend.pipeline.context_generator import Context_Generator
 import spacy
+import time
 
+start_time = time.time()
 class RAG_Interface():
     def __init__(self):
         self.nlp = spacy.load("en_core_web_sm")
@@ -18,4 +20,6 @@ class RAG_Interface():
         context_as_string = self.context_generator.generate_context(user_query, content_sources)
         return self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions)
 r = RAG_Interface()
-print(r.augment_query("Why do penguins live in antarctica?"))
+print(r.augment_query("What is the equation for the normal distribution in probability theory?"))
+end_time = time.time()
+print(f"Runtime: {end_time - start_time:.4f} seconds")

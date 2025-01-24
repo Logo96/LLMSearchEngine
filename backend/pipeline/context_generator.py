@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+import torch.nn.functional as F
 
 class Context_Generator():
     def __init__(self, nlp):
@@ -8,40 +8,35 @@ class Context_Generator():
     
     def generate_context(self, user_query, content_sources):
         context_list= []
+        query_embedding = self.transformer.encode(user_query, convert_to_tensor=True)
         for text in content_sources["Wikipedia"]:
             chunked_text = self.__chunk_content(text["content"])
-            query_embedding = self.transformer.encode(user_query, convert_to_tensor=True)
-            chunk_embeddings = self.transformer.encode(chunked_text, convert_to_tensor=True)
-
-            similarities = cosine_similarity(
-            query_embedding.cpu().numpy().reshape(1, -1),
-            chunk_embeddings.cpu().numpy())[0]
-
-            relevance_rankings = sorted(
+            if (chunked_text):
+                chunk_embeddings = self.transformer.encode(chunked_text, convert_to_tensor=True, batch_size=16)
+                similarities = F.cosine_similarity(query_embedding, chunk_embeddings, dim=1).cpu().numpy()
+                #Top k hard-coded
+                relevance_rankings = sorted(
                 zip(chunked_text, similarities), 
-                key=lambda x: x[1], 
-                reverse=True)
-            context_list.append(f"{text['title']}: {self.__format_context(relevance_rankings)}")
+                    key=lambda x: x[1], 
+                    reverse=True
+                    )[:3]
+                context_list.append(f"{text['title']}: {self.__format_context(relevance_rankings)}")
         return "\n\n".join(context_list)
     
-    def __chunk_content(self, content_text, chunk_sentence_len=3):
-        doc = self.nlp(content_text)
-        # Might need to clean Latex/Other expressions
-        sentences = [sent.text for sent in doc.sents]
+    #Need to hyperparameter tune step_size
+    #Breaking due to no parsing efforts
+    def __chunk_content(self, content_text, min_window_size=1, max_window_size=5, step_size=1):
+        sentences = [sent.text for sent in self.nlp(content_text).sents]
         chunks = []
-        cur_chunk = []
-        for sent in sentences:
-            cur_chunk.append(sent)
-            if len(cur_chunk) == chunk_sentence_len:
-                chunks.append("".join(cur_chunk))
-                cur_chunk = []
-        if cur_chunk:
-            chunks.append("".join(cur_chunk))
+        n = len(sentences)
+        for window_size in range(min_window_size, max_window_size + 1):
+            for i in range(0, n - window_size + 1, step_size):
+                chunks.append(" ".join(sentences[i:i + window_size]))
         return chunks
     
     def __format_context(self, relevance_rankings):
         return str(relevance_rankings[0][0]).strip()
-
+    
     def assemble_augmented_query(self, user_query, context, instruction):
         augmented_query = f"""
         ### User Query:
