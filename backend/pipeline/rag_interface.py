@@ -1,5 +1,5 @@
-from retriever import Retriever
-from context_generator import Context_Generator
+from backend.pipeline.retriever import Retriever
+from backend.pipeline.context_generator import Context_Generator
 
 class RAG_Interface():
     def __init__(self):
@@ -16,5 +16,3 @@ class RAG_Interface():
         context_as_string = self.context_generator.generate_context(user_query, chunked_content)
         return self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions)
 
-r = RAG_Interface()
-print(r.augment_query("What does Steve Jobs do?"))

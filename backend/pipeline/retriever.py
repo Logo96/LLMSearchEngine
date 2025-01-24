@@ -15,7 +15,6 @@ class Retriever:
 
     def search_and_fetch_pages(self, query, top_k=1):
         keyphrase_query = extract_keyphrase_naive(self.nlp, query)
-        print(keyphrase_query)
         search_results = self.__search_wikipedia(keyphrase_query)[1]
         if not search_results:
             return {"error": "No matching pages found."}
@@ -60,10 +59,3 @@ class Retriever:
             chunks.append("".join(cur_chunk))
         return chunks
 
-# Retriever.py
-# Step 1: Get User Prompt Input
-# Step 2: Retrieve top k content pieces
-# Step 3: Chunk the content
-# Context_Generator.py
-# Step 4: Rank chunks by semantic relevance to user prompt
-# Step 5: Assemble into augmented prompt and feed to LLM

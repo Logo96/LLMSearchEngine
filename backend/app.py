@@ -22,9 +22,16 @@ app = FastAPI(lifespan=lifespan)
 @app.post("/inference", response_model=LLMResponse)
 async def inference(prompt: LLMRequest):
     llm_interface = app.state.llm_interface
-    response = llm_interface.GenerateOutput(prompt.query)
+    response = llm_interface.generate_output(prompt.query)
     return {"response": response}
 
+@app.post("/inference/rag", response_model=LLMResponse)
+async def inference(prompt: LLMRequest):
+    llm_interface = app.state.llm_interface
+    rag_interace = app.state.rag_interface
+    augmented_query = rag_interace.augment_query(prompt.query)
+    response = llm_interface.generate_output(augmented_query)
+    return {"response": augmented_query}
 
 @app.get("/")
 async def root():
