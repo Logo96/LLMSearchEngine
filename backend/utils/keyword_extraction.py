@@ -4,4 +4,4 @@ def extract_keyphrase_naive(nlp, query):
     if entities:
         return entities
     keywords = [token.text for token in doc if token.pos_ in {"NOUN", "PROPN"} and not token.is_stop]
-    return " ".join(keywords) if keywords else query
+    return keywords

@@ -14,6 +14,7 @@ class Retriever:
 
     def search_and_fetch_pages(self, query, top_k=1):
         keyphrase_query = extract_keyphrase_naive(self.nlp, query)
+        print("keyphrases:", keyphrase_query)
         wiki_pages = self.__search_wikipedia(keyphrase_query, top_k)
         return {
             "Wikipedia": wiki_pages,

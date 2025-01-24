@@ -17,6 +17,5 @@ class RAG_Interface():
         content_sources = self.retriever.search_and_fetch_pages(user_query)
         context_as_string = self.context_generator.generate_context(user_query, content_sources)
         return self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions)
-
 r = RAG_Interface()
-print(r.augment_query("Who is Steve Jobs"))
+print(r.augment_query("Why do penguins live in antarctica?"))
