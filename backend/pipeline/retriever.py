@@ -1,61 +1,52 @@
 import wikipediaapi
 import requests
-import spacy
 import os
 from dotenv import load_dotenv
 from pathlib import Path
 from backend.utils.keyword_extraction import extract_keyphrase_naive
 
 class Retriever:
-    def __init__(self, language='en'):
+    def __init__(self, nlp, language='en'):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         user_agent = os.getenv("WIKIPEDIA_USER_AGENT")
         self.wiki = wikipediaapi.Wikipedia(user_agent, language=language)
-        self.nlp = spacy.load("en_core_web_sm")
+        self.nlp = nlp
 
     def search_and_fetch_pages(self, query, top_k=1):
         keyphrase_query = extract_keyphrase_naive(self.nlp, query)
-        search_results = self.__search_wikipedia(keyphrase_query)[1]
-        if not search_results:
-            return {"error": "No matching pages found."}
-        # Fetch the top_k search results
-        best_match = search_results[0]
-        page = self.wiki.page(best_match)
-
-        if page.exists():
-            return {
-                "title": page.title,
-                "summary": page.summary,
-                "content": page.text,
-                "content_chunked": self.__chunk_content(page.text),
-                "url": page.fullurl
-            }
-        else:
-            return {"error": "Page does not exist."}
-        
-    def __search_wikipedia(self, query, limit=5):
-        url = "https://en.wikipedia.org/w/api.php"
-        params = {
-            "action": "opensearch",
-            "format": "json",
-            "search": query,
-            "limit": limit
+        wiki_pages = self.__search_wikipedia(keyphrase_query, top_k)
+        return {
+            "Wikipedia": wiki_pages,
+            "Google": None,
+            "News": None
         }
-        response = requests.get(url, params=params)
-        return response.json()
-    
-    def __chunk_content(self, content_text, chunk_sentence_len=3):
-        doc = self.nlp(content_text)
-        # Might need to clean Latex/Other expressions
-        sentences = [sent.text for sent in doc.sents]
-        chunks = []
-        cur_chunk = []
-        for sent in sentences:
-            cur_chunk.append(sent)
-            if len(cur_chunk) == chunk_sentence_len:
-                chunks.append("".join(cur_chunk))
-                cur_chunk = []
-        if cur_chunk:
-            chunks.append("".join(cur_chunk))
-        return chunks
+
+    # Returns a list of wiki-pages in json format
+    def __search_wikipedia(self, keyphrase_query, limit, keyphrase_count=3):
+        url = "https://en.wikipedia.org/w/api.php"
+        pages = []
+        for query_topic in keyphrase_query[0:keyphrase_count]:
+            print("Current Query Topic: ", query_topic)
+            params = {
+                "action": "opensearch",
+                "format": "json",
+                "search": query_topic,
+                "limit": limit
+            }
+            valid_articles = (requests.get(url, params=params)).json()[1][0:limit]
+            for valid_article in valid_articles:
+                cur_page = self.wiki.page(valid_article)
+                if cur_page.exists():
+                    pages.append(
+                        {
+                        "title": cur_page.title,
+                        "summary": cur_page.summary,
+                        "content": cur_page.text,
+                        "url": cur_page.fullurl    
+                        }
+                    )
+        return pages
+
+        
+   
 
