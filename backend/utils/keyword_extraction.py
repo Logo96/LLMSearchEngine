@@ -1,7 +1,6 @@
-def extract_keyphrase_naive(nlp, query):
-    doc = nlp(query)
-    entities = [ent.text for ent in doc.ents if ent.label_ in {"PERSON", "ORG", "GPE", "EVENT"}]
-    if entities:
-        return entities
-    keywords = [token.text for token in doc if token.pos_ in {"NOUN", "PROPN"} and not token.is_stop]
-    return keywords
+from keybert import KeyBERT
+def extract_keyphrases(query, similarity_threshold):
+    model = KeyBERT('all-MiniLM-L6-v2')
+    keywords = model.extract_keywords(query, keyphrase_ngram_range=(1, 3), stop_words='english', top_n=5)
+    return [(phrase, score) for phrase, score in keywords if score > similarity_threshold]
+

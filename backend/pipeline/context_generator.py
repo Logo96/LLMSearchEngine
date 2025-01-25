@@ -1,18 +1,16 @@
-from sentence_transformers import SentenceTransformer
 import torch.nn.functional as F
 
 class Context_Generator():
     def __init__(self, nlp):
-        self.transformer = SentenceTransformer('all-MiniLM-L6-v2')
         self.nlp = nlp
     
-    def generate_context(self, user_query, content_sources):
+    def generate_context(self, user_query, content_sources, embedding_model):
         context_list= []
-        query_embedding = self.transformer.encode(user_query, convert_to_tensor=True)
+        query_embedding = embedding_model.encode(user_query, convert_to_tensor=True)
         for text in content_sources["Wikipedia"]:
             chunked_text = self.__chunk_content(text["content"])
             if (chunked_text):
-                chunk_embeddings = self.transformer.encode(chunked_text, convert_to_tensor=True, batch_size=16)
+                chunk_embeddings = embedding_model.encode(chunked_text, convert_to_tensor=True, batch_size=16)
                 similarities = F.cosine_similarity(query_embedding, chunk_embeddings, dim=1).cpu().numpy()
                 #Top k hard-coded
                 relevance_rankings = sorted(

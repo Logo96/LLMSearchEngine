@@ -3,19 +3,21 @@ import requests
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-from backend.utils.keyword_extraction import extract_keyphrase_naive
+from backend.utils.keyword_extraction import extract_keyphrases
 
 class Retriever:
-    def __init__(self, nlp, language='en'):
+    def __init__(self, nlp, language='en', similariy_threshold=.65):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         user_agent = os.getenv("WIKIPEDIA_USER_AGENT")
         self.wiki = wikipediaapi.Wikipedia(user_agent, language=language)
         self.nlp = nlp
+        self.similarity_threshold = similariy_threshold
 
-    def search_and_fetch_pages(self, query, top_k=1):
-        keyphrase_query = extract_keyphrase_naive(self.nlp, query)
+    def search_and_fetch_pages(self, query, embedding_model, search_depth=3):
+        #Needs to be changed to show cosine similarities
+        keyphrase_query = [keyword_sim_pair[0] for keyword_sim_pair in extract_keyphrases(query, self.similarity_threshold)]
         print("keyphrases:", keyphrase_query)
-        wiki_pages = self.__search_wikipedia(keyphrase_query, top_k)
+        wiki_pages = self.__search_wikipedia(keyphrase_query, search_depth)
         return {
             "Wikipedia": wiki_pages,
             "Google": None,
@@ -23,18 +25,18 @@ class Retriever:
         }
 
     # Returns a list of wiki-pages in json format
-    def __search_wikipedia(self, keyphrase_query, limit, keyphrase_count=3):
+    def __search_wikipedia(self, keyphrase_query, search_depth):
         url = "https://en.wikipedia.org/w/api.php"
         pages = []
-        for query_topic in keyphrase_query[0:keyphrase_count]:
+        for query_topic in keyphrase_query:
             print("Current Query Topic: ", query_topic)
             params = {
                 "action": "opensearch",
                 "format": "json",
                 "search": query_topic,
-                "limit": limit
+                "limit": search_depth
             }
-            valid_articles = (requests.get(url, params=params)).json()[1][0:limit]
+            valid_articles = (requests.get(url, params=params)).json()[1][0:search_depth]
             for valid_article in valid_articles:
                 cur_page = self.wiki.page(valid_article)
                 if cur_page.exists():
