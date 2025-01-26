@@ -21,4 +21,4 @@ class RAG_Interface():
         return self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions)
 
 r = RAG_Interface()
-print(r.augment_query("Define machine learning and its applications in real-world problems.", "all-MiniLM-L6-v2"))
+print(r.augment_query("When was the United States founded", "all-MiniLM-L6-v2"))

@@ -1,5 +1,6 @@
 import "../css/TextPrompt.css"
-function TextPrompt({ value, onChange, placeholder = "Enter your query here...", rows = 4 }) {
+function TextPrompt({ value, onPromptChange, placeholder = "Enter your query here...", rows = 4 }) {
+  const onChange = onPromptChange
     return (
       <div className="text-prompt-container">
         <textarea

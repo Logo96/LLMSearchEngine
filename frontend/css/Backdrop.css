@@ -1,0 +1,14 @@
+.backdrop {
+    width: 95%; /* Take 90% of the screen's width */
+    height: 99%; /* Take 90% of the screen's height */
+    background-color: #FFFF; /* White with slight transparency */
+    border-radius: 25px; /* Curved corners */
+    position: fixed; /* Stay fixed on the screen */
+    top: 50%; /* Center vertically */
+    left: 52%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust to true center */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

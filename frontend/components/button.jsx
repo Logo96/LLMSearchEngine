@@ -31,7 +31,6 @@ function APIButton({
       if (onError) onError(error);
     }
   }
-
   return (
     <button
       className={`btn ${buttonStyle}`}

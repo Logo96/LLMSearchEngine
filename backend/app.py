@@ -49,7 +49,6 @@ async def inference_rag(payload: LLMInferenceRequest):
     augmented_query = rag_interface.augment_query(payload.query, payload.embedding_model)
     llm_output = llm_interface.generate_output(augmented_query, payload.llm_model, 
                             payload.temperature, payload.top_p, payload.top_k, payload.max_tokens)
-    print(llm_output)
     return {"response": llm_output}
 
 @app.get("/")
