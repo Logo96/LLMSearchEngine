@@ -3,7 +3,7 @@ import Controls from "./controls"
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../css/SettingsPanel.css";
 
-function SettingsPanel({onParameterChange}) {
+function SettingsPanel({handleParameterChange, currentInferenceRequest}) {
     const [isOpen, setIsOpen] = useState(false)
     const togglePanel = () => {
         setIsOpen(!isOpen)
@@ -27,7 +27,7 @@ function SettingsPanel({onParameterChange}) {
               </button>
             </div>
             <div className="settings-content">
-              <Controls onParameterChange={onParameterChange}>
+              <Controls handleParameterChange={handleParameterChange} currentInferenceRequest={currentInferenceRequest}>
               </Controls>
             </div>
           </div>
