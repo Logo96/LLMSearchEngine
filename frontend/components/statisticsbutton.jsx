@@ -9,24 +9,21 @@ function StatisticsPanel({ children }) {
     };
     return (
         <>
-            {/* Statistics Button */}
             <button
                 className={`statistics-button ${isOpen ? "panel-open" : ""}`}
                 onClick={togglePanel}
                 style={{
                     position: "fixed",
-                    bottom: "5%",
-                    right: isOpen ? "32vw" : "10px", // Moves with panel
+                    bottom: "1%",
+                    right: isOpen ? "32vw" : "10px", 
                     transition: "right 0.3s ease-in-out",
                 }}
             >
                 <i className="fas fa-chart-bar"></i>
             </button>
 
-            {/* Overlay to close the panel when clicking outside */}
             {isOpen && <div className="overlay" onClick={togglePanel}></div>}
 
-            {/* Right Panel */}
             <div className={`statistics-panel ${isOpen ? "open" : ""}`}>
                 <div className="statistics-header">
                     <h2>Statistics</h2>

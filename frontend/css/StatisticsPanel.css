@@ -1,33 +1,32 @@
-/* Statistics Button */
 .statistics-button {
     position: absolute;
+    background-color: white;
     bottom: 10%;
     right: 10%;
     color: black;
-    border: none;
+    border: 2px solid black;
     padding: 10px 20px;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 36px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    z-index: 10;
   }
-  
   .statistics-button:hover {
-    background-color: #F1F3F4;
+    border: 2px solid black;
   }
   
   .statistics-panel {
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 30%; /* Scaled to user screen size */
-    height: 40%; /* Scaled to user screen size */
+    width: 30%; 
+    height: 40%; 
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     z-index: 20;
     transition: transform 0.3s ease-in-out;
-    transform: translateX(1000%); /* Hidden by default */
+    transform: translateX(1000%);
   }
   
   .statistics-panel.open {

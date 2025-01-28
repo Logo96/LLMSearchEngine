@@ -12,10 +12,10 @@ function App() {
         query: "",
         llm_model: "Qwen/Qwen2.5-0.5B",
         embedding_model: "all-MiniLM-L6-v2",
-        temperature: 0.6,
+        temperature: 0.5,
         top_k: 50,
-        top_p: 0.8,
-        max_tokens: 100
+        top_p: 0.5,
+        max_tokens: 500
     }
   })
   async function sendApiRequest() {
