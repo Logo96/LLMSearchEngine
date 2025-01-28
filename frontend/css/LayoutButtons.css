@@ -1,0 +1,35 @@
+.layout-button {
+  background-color: #1f2937; /* Tailwind blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 10; /* Ensure buttons are above overlapping elements */
+}
+
+.layout-button:hover {
+  background-color: #2563eb; /* Darker Tailwind blue */
+  transform: scale(1.05);
+}
+
+.layout-button.pressed {
+  background-color: #2563eb;
+  transform: scale(1.2);
+}
+
+.button-container {
+  gap: 1.5rem; /* Space between buttons */
+  display: flex;
+  position: absolute;
+  top: 5%; /* Keep your original top positioning */
+  left: 42%;
+  align-items: center; 
+  width: 100%; 
+  margin-top: 0%; 
+  padding: 0; /* Ensure no unwanted padding */
+  z-index: 20; /* Ensure container is above overlapping elements */
+  pointer-events: auto; /* Explicitly allow clicking on the container */
+}

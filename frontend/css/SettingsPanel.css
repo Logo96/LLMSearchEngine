@@ -2,7 +2,7 @@
 .settings-button {
   position: absolute;
   top: 100%;
-  left: -1%;
+  left: -1.1%;
   background-color: #1f2937; /* Tailwind blue */
   color: white;
   border: none;
