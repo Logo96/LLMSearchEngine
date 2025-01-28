@@ -1,5 +1,6 @@
 import SettingsPanel from "./settingsPanel";
 import TextPrompt from "./textprompt";
+import Controls from "./controls";
 function Query( {handleParameterChange, setPrompt_Request, currentInferenceRequest} ) {
     return (
         <div style={{position: "relative"}}>
@@ -7,6 +8,8 @@ function Query( {handleParameterChange, setPrompt_Request, currentInferenceReque
             <TextPrompt onPromptChange={setPrompt_Request}>
             </TextPrompt>
             <SettingsPanel handleParameterChange={handleParameterChange} currentInferenceRequest={currentInferenceRequest}>
+                <Controls handleParameterChange={handleParameterChange} currentInferenceRequest={currentInferenceRequest}>
+                </Controls>
             </SettingsPanel>
         </div>
     )

@@ -1,0 +1,59 @@
+/* Controls Panel Styling */
+.controls-panel {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .controls-panel h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: #1f2937;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+  }
+  
+  .parameter-group {
+    margin-bottom: 16px;
+  }
+  
+  .parameter-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #1f2937;
+  }
+  
+  .parameter-group input,
+  .parameter-group select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    border: 1px solid #1f2937;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  
+  .parameter-group input:focus,
+  .parameter-group select:focus {
+    outline: none;
+    border-color: #60a5fa; /* Tailwind blue */
+  }
+  
+  .parameter-group select {
+    cursor: pointer;
+  }
+  

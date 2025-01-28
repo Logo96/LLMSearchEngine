@@ -7,7 +7,7 @@ function Home({handleHomeChange, handleParameter_Change, currentInferenceRequest
         handleHomeChange();
     } else {
         console.log(e)
-        inference_Request.body.query = e;
+        currentInferenceRequest.query = e;
     } 
 }
   return (

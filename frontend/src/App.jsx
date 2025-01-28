@@ -18,8 +18,28 @@ function App() {
         max_tokens: 100
     }
   })
+  async function sendApiRequest() {
+    try {
+      const options = {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: inference_Request.body ? JSON.stringify(inference_Request.body) : null,
+      };
+      const response = await fetch(inference_Request.endpoint, options);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (onSuccess) onSuccess(data);
+    } catch (error) {
+      console.error("Error:", error);
+      if (onError) onError(error);
+    }
+  }
+
   const handleParameterChange = (key, value) => {
-    console.log(key, value);
     setInference_Request((prevInference_Request) => ({
       ...prevInference_Request,
       body: {
@@ -29,8 +49,6 @@ function App() {
     }));
   };
   
-  
-  
   const handleHomeChange = () => {
     //Send the Api Request
     //Load until results come back
@@ -39,8 +57,8 @@ function App() {
   }
   return (
     <div>
-      <NavigationBar />
-        {isHome ? <Home handleHomeChange={handleHomeChange} handleParameter_Change={handleParameterChange} currentInferenceRequest={inference_Request.body}/> : <Output jsonRequest={inference_Request.body.temperature}/> }
+      <NavigationBar setIsHome={setIsHome}/>
+        {isHome ? <Home handleHomeChange={handleHomeChange} handleParameter_Change={handleParameterChange} currentInferenceRequest={inference_Request.body}/> : <Output/> }
     </div>
   )
 }

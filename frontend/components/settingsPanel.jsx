@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Controls from "./controls"
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../css/SettingsPanel.css";
 
-function SettingsPanel({handleParameterChange, currentInferenceRequest}) {
+function SettingsPanel({ children }) {
     const [isOpen, setIsOpen] = useState(false)
     const togglePanel = () => {
         setIsOpen(!isOpen)
@@ -12,7 +11,7 @@ function SettingsPanel({handleParameterChange, currentInferenceRequest}) {
         <>
           {/* Settings Button */}
           <button className="settings-button" onClick={togglePanel}>
-          <i className="fas fa-cog"></i>
+            Settings
           </button>
     
           {/* Overlay to close the panel when clicking outside */}
@@ -20,15 +19,8 @@ function SettingsPanel({handleParameterChange, currentInferenceRequest}) {
     
           {/* Right Panel */}
           <div className={`settings-panel ${isOpen ? "open" : ""}`}>
-            <div className="settings-header">
-              <h2>Settings</h2>
-              <button className="close-button" onClick={togglePanel}>
-                &times;
-              </button>
-            </div>
             <div className="settings-content">
-              <Controls handleParameterChange={handleParameterChange} currentInferenceRequest={currentInferenceRequest}>
-              </Controls>
+              { children }
             </div>
           </div>
         </>

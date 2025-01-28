@@ -1,6 +1,6 @@
 .backdrop {
-    width: 95%; /* Take 90% of the screen's width */
-    height: 99%; /* Take 90% of the screen's height */
+    width: 93%; /* Take 90% of the screen's width */
+    height: 97%; /* Take 90% of the screen's height */
     background-color: #FFFF; /* White with slight transparency */
     border-radius: 25px; /* Curved corners */
     position: fixed; /* Stay fixed on the screen */

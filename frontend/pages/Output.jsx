@@ -1,10 +1,10 @@
-function Output({jsonRequest="test"}) {
+import ToggleLayouts from "../components/ToggleLayouts"
+import Backdrop from "../components/backdrop.jsx"
+function Output() {
     return (
-        <div>
-            <p>
-                {jsonRequest}
-            </p>
-        </div>
+        <Backdrop>
+            <ToggleLayouts/>
+        </Backdrop>
     )
 }
 export default Output
