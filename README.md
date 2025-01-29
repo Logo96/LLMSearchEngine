@@ -2,7 +2,7 @@
 
 ## Overview
 
-LLMSearchEngine is an experimental search engine designed to explore the differences between **Retrieval-Augmented Generation (RAG) and non-RAG** approaches when using Large Language Models (LLMs). This project provides a sandbox environment where users can **customize LLM behavior**, test search queries with and without RAG, and observe how retrieved context affects responses. The Large Language Models are inferenced locally using vLLM with the exception of GPT-3.5 and GPT-4 which are called from OpenAi's API.
+LLMSearchEngine is an experimental search engine designed to explore the differences between **Retrieval-Augmented Generation (RAG) and non-RAG** approaches when using Large Language Models (LLMs). This project provides a sandbox environment where users can **customize LLM behavior**, test search queries with and without RAG, and observe how retrieved context affects responses. The Large Language Models are inferenced locally using vLLM with the exception of GPT-3.5 and GPT-4 which are called from OpenAI's API.
 
 ## Features
 
