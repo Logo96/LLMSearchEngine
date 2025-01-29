@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
+import SideBySideMarkdown from './SideBySideMarkdown.jsx';
 import LLMOutput from './LLMOutput.jsx';
+import Sources from './sources.jsx';
 import StatisticsPanel from './statisticsbutton.jsx';
 import '../css/LayoutButtons.css'
 import '../css/LLMOutput.css'
 
-const ToggleLayouts = () => {
+const ToggleLayouts = ( {apiResponse} ) => {
   const [activePanel, setActivePanel] = useState("LLM");
 
   const renderLLMLayout = () => (
     <div className="flex flex-col gap-4">
-    <StatisticsPanel></StatisticsPanel>
-    <LLMOutput>
+    <StatisticsPanel> <Sources sources={apiResponse.model_RAG_sources}></Sources> </StatisticsPanel>
+    <LLMOutput prompt={apiResponse.model_query_basic} output={apiResponse.model_output_basic} >
 
     </LLMOutput>
     </div>
   );
   const renderComparisonLayout = () => (
-    <div className="grid grid-cols-2 gap-4">
-    <StatisticsPanel></StatisticsPanel>
-      <LLMOutput>
-
-      </LLMOutput>
+    <div className="flex flex-col gap-4">
+    <StatisticsPanel> <Sources sources={apiResponse.model_RAG_sources}></Sources> </StatisticsPanel>
+      <SideBySideMarkdown leftText={apiResponse.model_output_basic} rightText={apiResponse.model_output_RAG}>
+      </SideBySideMarkdown>
     </div>
   );
   const renderRAGLayout = () => (
     <div className="grid grid-cols-2 gap-4">
-    <StatisticsPanel></StatisticsPanel>
-    <LLMOutput>
+    <StatisticsPanel> <Sources sources={apiResponse.model_RAG_sources}></Sources> </StatisticsPanel>
+    <LLMOutput prompt={apiResponse.model_query_RAG} output={apiResponse.model_output_RAG}>
 
     </LLMOutput>
     </div>

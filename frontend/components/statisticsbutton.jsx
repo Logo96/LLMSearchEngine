@@ -26,10 +26,7 @@ function StatisticsPanel({ children }) {
 
             <div className={`statistics-panel ${isOpen ? "open" : ""}`}>
                 <div className="statistics-header">
-                    <h2>Statistics</h2>
-                    <button className="close-button" onClick={togglePanel}>
-                        &times;
-                    </button>
+                    <h2>Sources</h2>
                 </div>
                 <div className="statistics-content">
                     {children}

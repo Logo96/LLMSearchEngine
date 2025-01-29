@@ -3,7 +3,12 @@ import Slider from '@mui/material/Slider';
 import "../css/Controls.css";
 
 function Controls({ handleParameterChange, currentInferenceRequest }) {
-  const supported_LLM_Models = ["Qwen/Qwen2.5-0.5B"];
+  const supported_LLM_Models = [
+    "gpt-4-turbo", "gpt-3.5-turbo", "gpt2", 
+    "meta-llama/Meta-Llama-3.1-405B-Instruct", "meta-llama/Meta-Llama-3-70B-Instruct", "meta-llama/Llama-2-70b-hf",
+    "Qwen/Qwen-7B", "Qwen/Qwen2.5-0.5B", 
+    "deepseek-ai/DeepSeek-V3", "deepseek-ai/DeepSeek-V2", "deepseek-ai/deepseek-llm-67b-base"
+  ];
   const supported_Embedding_Models = ["all-MiniLM-L6-v2"];
 
   return (

@@ -9,16 +9,18 @@ class RAG_Interface():
         self.retriever = Retriever(self.nlp)
         self.context_generator = Context_Generator(self.nlp)
         self.instructions = f"""
-        Using the context provided below, 
-        answer the user's question as thoroughly and concisely as possible. 
-        Do not include unrelated information, and ensure your response is clear and easy to understand. 
-        If the context is insufficient to answer the question, indicate that additional information is required.
+        Using the context provided below, answer the user's question as thoroughly as possible. 
+        - Enhance the response using the context to provide rich and informative details.
+        - Style the response in Markdown for improved readability:
+            - Use headings (e.g., `###`) for structure.
+            - Use bullet points or lists where applicable.
+            - Highlight key terms in **bold** or `code blocks` for emphasis.
+        - Do not include unrelated information, and ensure the response remains clear and easy to understand.
+        - If the context is insufficient to answer the question, indicate that additional information is required.
         """
+
     def augment_query(self, user_query, embedding_model):
         embed_model = SentenceTransformer(embedding_model)
         content_sources = self.retriever.search_and_fetch_pages(user_query, embed_model)
-        context_as_string = self.context_generator.generate_context(user_query, content_sources, embed_model)
-        return self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions)
-
-r = RAG_Interface()
-print(r.augment_query("When was the United States founded", "all-MiniLM-L6-v2"))
+        context_as_string, sources = self.context_generator.generate_context(user_query, content_sources, embed_model)
+        return [self.context_generator.assemble_augmented_query(user_query, context_as_string, self.instructions), sources]

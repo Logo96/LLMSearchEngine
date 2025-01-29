@@ -1,27 +1,32 @@
-import './App.css'
-import { useState } from 'react'
-import Home from "../pages/Home"
-import Output from '../pages/Output' 
-import NavigationBar from '../components/navigationbar'
+import './App.css';
+import { useState } from 'react';
+import Home from "../pages/Home";
+import Output from '../pages/Output'; 
+import NavigationBar from '../components/navigationbar';
+
 function App() {
-  const [isHome, setIsHome] = useState(true)
+  const [isHome, setIsHome] = useState(true);
+  const [apiResponse, setApiResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [inference_Request, setInference_Request] = useState({
-    endpoint: "http://127.0.0.1:8000/inference/rag",
+    endpoint: "http://127.0.0.1:8000/inference",
     method: "POST",
     body: {
-        query: "",
-        llm_model: "Qwen/Qwen2.5-0.5B",
-        embedding_model: "all-MiniLM-L6-v2",
-        temperature: 0.5,
-        top_k: 50,
-        top_p: 0.5,
-        max_tokens: 500
-    }
-  })
+      query: "",
+      llm_model: "gpt-4-turbo",
+      embedding_model: "all-MiniLM-L6-v2",
+      temperature: 0.5,
+      top_k: 50,
+      top_p: 0.5,
+      max_tokens: 500,
+    },
+  });
+
   async function sendApiRequest() {
+    setLoading(true);
     try {
       const options = {
-        method,
+        method: inference_Request.method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -29,13 +34,14 @@ function App() {
       };
       const response = await fetch(inference_Request.endpoint, options);
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error, status: ${response.status}`);
       }
       const data = await response.json();
-      if (onSuccess) onSuccess(data);
+      return data;
     } catch (error) {
       console.error("Error:", error);
-      if (onError) onError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -48,18 +54,47 @@ function App() {
       },
     }));
   };
-  
-  const handleHomeChange = () => {
-    //Send the Api Request
-    //Load until results come back
-    //Switch screens and display output
-    setIsHome(!isHome);
-  }
+  const handleHomeButtonPressed = () => {
+    if (isHome) {
+      setInference_Request((prev) => ({
+        ...prev,
+        body: {
+          query: "",
+          llm_model: "Qwen/Qwen2.5-0.5B",
+          embedding_model: "all-MiniLM-L6-v2",
+          temperature: 0.5,
+          top_k: 50,
+          top_p: 0.5,
+          max_tokens: 500,
+        },
+      }));
+    } else {
+      setIsHome(true);
+    }
+  };
+
+  const handleHomeChange = async () => {
+    setIsHome(false);
+    const result = await sendApiRequest();
+    if (result) {
+      setApiResponse(result);
+    }
+  };
+
   return (
     <div>
-      <NavigationBar setIsHome={setIsHome}/>
-        {isHome ? <Home handleHomeChange={handleHomeChange} handleParameter_Change={handleParameterChange} currentInferenceRequest={inference_Request.body}/> : <Output/> }
+      <NavigationBar setIsHome={handleHomeButtonPressed} />
+      {isHome ? (
+        <Home
+          handleHomeChange={handleHomeChange}
+          handleParameter_Change={handleParameterChange}
+          currentInferenceRequest={inference_Request.body}
+        />
+      ) : (
+        <Output apiResponse={apiResponse} loading={loading} />
+      )}
     </div>
-  )
+  );
 }
-export default App
+
+export default App;

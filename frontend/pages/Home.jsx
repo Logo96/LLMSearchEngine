@@ -1,14 +1,12 @@
 import Query from '../components/query.jsx'
 import Backdrop from "../components/backdrop.jsx"
-import { useState } from 'react'
 function Home({handleHomeChange, handleParameter_Change, currentInferenceRequest}) {
   const handlePrompt_Change = (e, isEnterKey) => {
     if (isEnterKey) {
         handleHomeChange();
     } else {
-        console.log(e)
-        currentInferenceRequest.query = e;
-    } 
+      currentInferenceRequest.query = e;
+    }
 }
   return (
     <Backdrop>

@@ -6,7 +6,7 @@ from pathlib import Path
 from backend.utils.keyword_extraction import extract_keyphrases
 
 class Retriever:
-    def __init__(self, nlp, language='en', similariy_threshold=.65):
+    def __init__(self, nlp, language='en', similariy_threshold=.55):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         user_agent = os.getenv("WIKIPEDIA_USER_AGENT")
         self.wiki = wikipediaapi.Wikipedia(user_agent, language=language)

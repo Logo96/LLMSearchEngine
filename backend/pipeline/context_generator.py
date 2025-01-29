@@ -6,23 +6,23 @@ class Context_Generator():
     
     def generate_context(self, user_query, content_sources, embedding_model):
         context_list= []
+        title_url_pairs = []
         query_embedding = embedding_model.encode(user_query, convert_to_tensor=True)
         for text in content_sources["Wikipedia"]:
             chunked_text = self.__chunk_content(text["content"])
             if (chunked_text):
                 chunk_embeddings = embedding_model.encode(chunked_text, convert_to_tensor=True, batch_size=16)
                 similarities = F.cosine_similarity(query_embedding, chunk_embeddings, dim=1).cpu().numpy()
-                #Top k hard-coded
                 relevance_rankings = sorted(
                 zip(chunked_text, similarities), 
                     key=lambda x: x[1], 
                     reverse=True
-                    )[:3]
-                context_list.append(f"{text['title']}: {self.__format_context(relevance_rankings)}")
-        return "\n\n".join(context_list)
+                    )[:10]
+                context_list.append(f"**{text['title']}**: {self.__format_context(relevance_rankings)}")
+                title_url_pairs.append((text['title'], text['url']))
+        return ["\n\n".join(context_list), title_url_pairs]
     
     #Need to hyperparameter tune step_size
-    #Breaking due to no parsing efforts
     def __chunk_content(self, content_text, min_window_size=1, max_window_size=5, step_size=1):
         sentences = [sent.text for sent in self.nlp(content_text).sents]
         chunks = []
@@ -33,17 +33,9 @@ class Context_Generator():
         return chunks
     
     def __format_context(self, relevance_rankings):
-        return str(relevance_rankings[0][0]).strip()
+        return "\n".join([str(rank[0]).strip() for rank in relevance_rankings])
+
     
     def assemble_augmented_query(self, user_query, context, instruction):
-        augmented_query = f"""
-        ### User Query:
-        {str(user_query).strip()}
-
-        ### Context:
-        {str(context).strip()}
-
-        ### Instructions:
-        {str(instruction).strip()}
-        """
+        augmented_query = f"### User Query: \n {user_query.strip()} \n ### Context: \n {context.strip()} \n ### Instructions: \n {instruction.strip()}"
         return augmented_query

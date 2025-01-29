@@ -1,10 +1,11 @@
 import "../css/TextPrompt.css"
 function TextPrompt({ value, onPromptChange, placeholder = "Enter your query here...", rows = 3 }) {
-  const onChange = onPromptChange
   const handleEnterDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); 
-      onPromptChange(value, true);
+        e.preventDefault();
+      if (e.target.value.trim() != "") {
+        onPromptChange(value, true);
+      } 
     }
   };
     return (
@@ -13,7 +14,7 @@ function TextPrompt({ value, onPromptChange, placeholder = "Enter your query her
           className="text-prompt-input"
           value={value}
           onKeyDown={handleEnterDown}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onPromptChange(e.target.value)}
           placeholder={placeholder}
           rows={rows}
         ></textarea>
