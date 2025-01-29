@@ -2,7 +2,7 @@
 
 ## Overview
 
-LLMSearchEngine is an experimental search engine designed to explore the differences between **Retrieval-Augmented Generation (RAG) and non-RAG** approaches when using Large Language Models (LLMs). This project provides a sandbox environment where users can **customize LLM behavior**, test search queries with and without RAG, and observe how retrieved context affects responses.
+LLMSearchEngine is an experimental search engine designed to explore the differences between **Retrieval-Augmented Generation (RAG) and non-RAG** approaches when using Large Language Models (LLMs). This project provides a sandbox environment where users can **customize LLM behavior**, test search queries with and without RAG, and observe how retrieved context affects responses. The Large Language Models are inferenced locally using vLLM with the exception of GPT-3.5 and GPT-4 which is called from an API.
 
 ## Features
 
@@ -13,7 +13,7 @@ LLMSearchEngine is an experimental search engine designed to explore the differe
 
 ## How the RAG Pipeline Works
 - **User Query** - Keywords are extracted from the query using the KeyBERT model.
-- **Document Retrieval** - Relevant documents are sourced from the internet (Currently Wikipedia) using keywords and then chunked.
-- **Context Generation** - A cosine similarity is computed between each chunk and the embedded query. If the computed cosine similarity is above a certain threshold, it is included in the context.
-- **LLM Generation** - An augmented prompt is assembled with instructions and context.
+- **Document Retrieval** - Relevant documents are sourced from the internet (currently only Wikipedia) using keywords and then chunked.
+- **Context Generation** - A cosine similarity is computed between each embedded chunk and the embedded query. If the computed cosine similarity is above a certain threshold, it is included in the context.
+- **LLM Generation** - An augmented prompt is assembled with instructions and context, and then fed as input into the LLM.
 - **Comparison Display** - Both responses are shown side-by-side
