@@ -16,7 +16,6 @@ class Retriever:
     def search_and_fetch_pages(self, query, embedding_model, search_depth=3):
         #Needs to be changed to show cosine similarities
         keyphrase_query = [keyword_sim_pair[0] for keyword_sim_pair in extract_keyphrases(query, self.similarity_threshold)]
-        print("keyphrases:", keyphrase_query)
         wiki_pages = self.__search_wikipedia(keyphrase_query, search_depth)
         return {
             "Wikipedia": wiki_pages,

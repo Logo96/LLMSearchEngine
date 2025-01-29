@@ -39,17 +39,7 @@ app.add_middleware(
     allow_methods=["*"], 
     allow_headers=["*"],
 )
-@app.post("/testing", response_model=LLMInferenceResponse)
-async def test(payload: LLMInferenceRequest):
-    print(payload)
-    await asyncio.sleep(10)
-    return {
-        "model_output_basic": "This is a basic response",
-        "model_query_basic": "This is a basic query",
-        "model_output_RAG": "This is a RAG response",
-        "model_query_RAG": "This is a RAG query",
-        "model_RAG_sources": ["Source 1", "Source 2"]
-    }
+
 @app.post("/inference", response_model=LLMInferenceResponse)
 async def inference(payload: LLMInferenceRequest):
     llm_interface = app.state.llm_interface
