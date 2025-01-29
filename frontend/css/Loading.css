@@ -10,7 +10,7 @@
   
   .loading-text {
     font-size: 1.5rem;
-    color: #1f2937; /* Tailwind Gray */
+    color: #1f2937; 
     font-weight: bold;
     animation: blink 1.5s infinite;
   }

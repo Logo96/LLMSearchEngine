@@ -1,9 +1,8 @@
-/* Settings Button */
 .settings-button {
   position: absolute;
   top: 100%;
   left: 0%;
-  background-color: #1f2937; /* Tailwind blue */
+  background-color: #1f2937; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -14,14 +13,14 @@
 }
 
 .settings-button:hover {
-  background-color: #2563eb; /* Darker Tailwind blue */
+  background-color: #2563eb;
   transform: scale(1.05);
 }
   
   .settings-panel {
     position: fixed;
     top: 0;
-    right: -100%; /* Hidden by default */  
+    right: -100%; 
     width: 300px;
     height: 100%;
     padding: 20px;

@@ -8,15 +8,10 @@ function SettingsPanel({ children }) {
     };
     return (
         <>
-          {/* Settings Button */}
           <button className="settings-button" onClick={togglePanel}>
             Settings
           </button>
-    
-          {/* Overlay to close the panel when clicking outside */}
           {isOpen && <div className="overlay" onClick={togglePanel}></div>}
-    
-          {/* Right Panel */}
           <div className={`settings-panel ${isOpen ? "open" : ""}`}>
             <div className="settings-content">
               { children }

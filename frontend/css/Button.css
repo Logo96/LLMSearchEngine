@@ -1,6 +1,3 @@
-/* Button.css */
-
-/* Base Styles */
 .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -12,43 +9,39 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
   
-  /* Primary Button */
   .btn.primary {
-    background-color: #3b82f6; /* Blue */
+    background-color: #3b82f6; 
     color: white;
   }
   
   .btn.primary:hover {
-    background-color: #2563eb; /* Darker blue */
+    background-color: #2563eb; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
-  /* Secondary Button */
+
   .btn.secondary {
-    background-color: #6b7280; /* Gray */
+    background-color: #6b7280;
     color: white;
   }
   
   .btn.secondary:hover {
-    background-color: #4b5563; /* Darker gray */
+    background-color: #4b5563;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  /* Danger Button */
   .btn.danger {
-    background-color: #ef4444; /* Red */
+    background-color: #ef4444;
     color: white;
   }
   
   .btn.danger:hover {
-    background-color: #dc2626; /* Darker red */
+    background-color: #dc2626;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  /* Disabled State */
   .btn:disabled {
-    background-color: #e5e7eb; /* Light Gray */
-    color: #9ca3af; /* Darker Gray */
+    background-color: #e5e7eb; 
+    color: #9ca3af; 
     cursor: not-allowed;
     box-shadow: none;
   }

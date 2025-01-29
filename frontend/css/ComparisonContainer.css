@@ -1,9 +1,9 @@
 .side-by-side-container {
-    display: flex; /* Use flexbox for side-by-side layout */
-    justify-content: flex-start; /* Ensure even but tight spacing between components */
-    align-items: flex-start; /* Align components to the top */
-    width: 100%; /* Full width of the container */
-    padding: 0; /* Remove padding around the container */
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    width: 100%; 
+    padding: 0; 
     margin-left: -2%;
     box-sizing: border-box;
   }

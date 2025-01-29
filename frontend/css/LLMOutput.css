@@ -29,7 +29,7 @@ body {
 .prompt-display {
   position: relative;
   align-self: flex-end;
-  max-width: 60%; /* Reduce width slightly to prevent overflow */
+  max-width: 60%; 
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
@@ -41,20 +41,20 @@ body {
 
 
 .prompt-text {
-  font-size: 20px; /* Reduce font size slightly if necessary */
+  font-size: 20px; 
   color: #1f2937;
   line-height: 1.5;
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  white-space: normal; /* Prevent it from forcing a long single-line text */
+  white-space: normal; 
 }
 .output-container {
-    position: relative; /* anchor for the robot icon */
+    position: relative; 
     max-width: 75%;
     padding: 1rem 1.25rem;
-    display: block; /* remove flex so text flows around icon */
-    margin-left: 0; /* Align to the left (optional) */
+    display: block; 
+    margin-left: 0; 
   }
 
 .output-text {
@@ -63,16 +63,16 @@ body {
     line-height: 1.8;
     word-wrap: break-word;
     text-align: left;
-    margin-left: 3rem; /* ensure text doesn't collide with the robot icon */
+    margin-left: 3rem; 
   }
 
 .icon-user {
     position: absolute; 
-    top: 50%;         /* Center vertically */
-    right: -3rem;      /* Place it on the right side inside the bubble */
+    top: 50%;         
+    right: -3rem;      
     transform: translateY(-50%);
     font-size: 2rem;
-    color: #1f2937; /* For visibility - adjust color as needed */
+    color: #1f2937; 
     vertical-align: middle;
   }
 
@@ -85,10 +85,9 @@ body {
     vertical-align: middle;
   }
 
-/* Wrapper for the entire layout */
 .output-wrapper {
   display: flex;
-  align-items: center; /* Align icons and the content at the top */
-  gap: 1rem; /* Add space between icons and the content */
+  align-items: center; 
+  gap: 1rem; 
   transform: scale(0.9);
 }
