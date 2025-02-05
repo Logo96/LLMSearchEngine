@@ -37,5 +37,5 @@ class Context_Generator():
 
     
     def assemble_augmented_query(self, user_query, context, instruction):
-        augmented_query = f"### User Query: \n {user_query.strip()} \n ### Context: \n {context.strip()} \n ### Instructions: \n {instruction.strip()}"
+        augmented_query = f"### Instructions: \n {instruction.strip()} \n ### Context: \n {context.strip()} \n ### User Query: \n {user_query.strip()}"
         return augmented_query

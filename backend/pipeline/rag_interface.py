@@ -15,7 +15,7 @@ class RAG_Interface():
             - Use headings (e.g., `###`) for structure.
             - Use bullet points or lists where applicable.
             - Highlight key terms in **bold** or `code blocks` for emphasis.
-        - Explicitly incorporate information gathered in the context section. Do not include unrelated information, and ensure the response remains clear and easy to understand.
+        - Explicitly incorporate all relevant information gathered in the context section.
         - If the context is insufficient to answer the question, indicate that additional information is required.
         """
 
