@@ -6,14 +6,14 @@ from pathlib import Path
 from backend.utils.keyword_extraction import extract_keyphrases
 
 class Retriever:
-    def __init__(self, nlp, language='en', similariy_threshold=.55):
+    def __init__(self, nlp, language='en', similariy_threshold=.65):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         user_agent = os.getenv("WIKIPEDIA_USER_AGENT")
         self.wiki = wikipediaapi.Wikipedia(user_agent, language=language)
         self.nlp = nlp
         self.similarity_threshold = similariy_threshold
 
-    def search_and_fetch_pages(self, query, embedding_model, search_depth=3):
+    def search_and_fetch_pages(self, query, embedding_model, search_depth=2):
         #Needs to be changed to show cosine similarities
         keyphrase_query = [keyword_sim_pair[0] for keyword_sim_pair in extract_keyphrases(query, self.similarity_threshold)]
         wiki_pages = self.__search_wikipedia(keyphrase_query, search_depth)

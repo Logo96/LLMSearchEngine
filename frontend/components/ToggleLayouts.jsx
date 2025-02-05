@@ -28,7 +28,6 @@ const ToggleLayouts = ( {apiResponse} ) => {
     <div className="grid grid-cols-2 gap-4">
     <StatisticsPanel> <Sources sources={apiResponse.model_RAG_sources}></Sources> </StatisticsPanel>
     <LLMOutput prompt={apiResponse.model_query_RAG} output={apiResponse.model_output_RAG}>
-
     </LLMOutput>
     </div>
   );
